@@ -43,7 +43,7 @@ class Brain:
             self.maxMemory = dqnConfig['maxMemory']
             self.gamma = dqnConfig['discount']
             self.dqnMemory = list()
-            self.actionMap = dqnConfig['actionMap']
+            self.invActionMap = dqnConfig['invActionMap']
         
         def storeExp(self, transition, gameOver):
             self.dqnMemory.append([transition, gameOver])
@@ -63,8 +63,8 @@ class Brain:
                 targetqs[i] = brain.model.predict(currentState)[0]   #get initial arbitrary output to be replaced by the values from bellman equation
                 #Update target q-values with calculated q-values from bellman equation for q-learning
                 if(gameOver):
-                    targetqs[i][self.actionMap[action]] = reward
+                    targetqs[i][self.invActionMap[action]] = reward
                 else:
-                    targetqs[i][self.actionMap[action]] = reward + self.gamma*np.max(brain.model.predict(nextState)[0])
+                    targetqs[i][self.invActionMap[action]] = reward + self.gamma*np.max(brain.model.predict(nextState)[0])
                 i += 1
             return (inputs,targetqs)

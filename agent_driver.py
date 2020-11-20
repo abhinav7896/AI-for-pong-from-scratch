@@ -12,7 +12,7 @@ from ann import MLP
 
 arch = [{'units': 128, 'activation': None, 'type': 'input'},
      {'units': 64, 'activation': 'relu', 'type': 'dense'},
-     {'units': 2, 'activation': 'relu', 'type': 'dense'}]
+     {'units': 3, 'activation': 'relu', 'type': 'dense'}]
 
 brainModel = MLP(arch,'adam', lr=0.01, m=0.0, gamma=0.009, beta1=0.9, beta2=0.99)
 
@@ -20,17 +20,21 @@ config = {
     'batchSize': 1024,
     'brainModel': brainModel,
     'nInputs': 128, 
-    'nOutputs': 2, 
+    'nOutputs': 3, 
     'learningRate':0.01, 
     'dqnConfig':
           {
               'maxMemory': 50000,
               'discount': 0.9,
               'actionMap': {
-                  2: 0,
-                  3: 1,
-                  0: 2,
-                  1: 3
+                  0: 0,
+                  1: 2,
+                  2: 5,
+                  },
+              'invActionMap': {
+                  0: 0,
+                  2: 1,
+                  5: 2,
                   }
           },
     'trainingEpochs': 550,
